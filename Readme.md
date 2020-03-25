@@ -3,7 +3,7 @@ Wallpaper Transformer
 
 Wallpaper Transformer is a tool that transforms applies different effects to images/wallpapers efficiently.
 The tool was originally inspired by [arch-pepe-maker](https://gitlab.com/SillyPill/arch-pape-maker)
-The primary motivation for the "rewrite" was to, increase performance, allow execution on the gpu, and add new features. 
+The primary motivation to reimplement arch-pepe-maker natively is to, increase performance, allow execution on the gpu, and add new features. 
 
 Halide was the project used to enable great performance, gpu execution (cura, opencl) and parallel execution. I managed to get performance x4 faster then the ImageMagic for blur. 
 

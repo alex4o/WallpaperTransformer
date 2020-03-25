@@ -1,11 +1,11 @@
 Wallpaper Transformer
 =====================
 
-I wrote this because image magic is slow, and doesn't support running code on the gpu, without recompilation. 
+Wallpaper Transformer is a tool that transforms modifies wallpapers, with different effect efficiently.
+The tool was originally inspired by [arch-pepe-maker](https://gitlab.com/SillyPill/arch-pape-maker)
+The primary motivation for the "rewrite" was to, increase performance, allow execution on the gpu, and add new features. 
 
-This used the halide project, to generate a gaussian blur filter.
-Even a naive implementation is x4 times faster then the image magic one,.
-There are cuda and opencl versions too, that should work, but I haven't gotten good results out of them.
+Halide was the project used to enable great performance, gpu execution (cura, opencl) and parallel execution. I managed to get performance x4 faster then the ImageMagic for blur. 
 
 Building
 ========

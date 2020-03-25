@@ -2,6 +2,7 @@ Wallpaper Transformer
 =====================
 
 Wallpaper Transformer is a tool that transforms applies different effects to images/wallpapers efficiently.
+At the moment the tool can only apply blur at the places described by a mask, but more effects will be implemented in the future.
 The tool was originally inspired by [arch-pepe-maker](https://gitlab.com/SillyPill/arch-pape-maker)
 The primary motivation to reimplement arch-pepe-maker natively is to, increase performance, allow execution on the gpu, and add new features. 
 

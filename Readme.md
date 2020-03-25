@@ -16,7 +16,6 @@ You need to have boost installed to build this. I am using the static libraries,
 2. `make` to generate optimized code
 3. `make wallpaper` to build the frontend
 
-
 Usage
 =====
 

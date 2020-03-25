@@ -8,8 +8,8 @@ The primary motivation to reimplement arch-pepe-maker natively is to, increase p
 
 Halide was the project used to enable great performance, gpu execution (cura, opencl) and parallel execution. I managed to get performance x4 faster then the ImageMagic for blur. 
 
-Building
-========
+## Building
+
 
 You need to have boost installed to build this. I am using the static libraries, so the binaries can be distributed easily.
 
@@ -17,10 +17,24 @@ You need to have boost installed to build this. I am using the static libraries,
 2. `make` to generate optimized code
 3. `make wallpaper` to build the frontend
 
-Usage
-=====
+## Usage
 
-You can substitute the cpu part for the other version if you like.
+
+```
+Usage: wallpaper_cpu input-file input-logo
+Wallpaper configurator:
+  -d [ --darken ] arg (=-0.0399999991)  Logo darken, accepts negative values for brighten
+  --input-file arg                      input image file
+  --input-logo arg                      logo image file
+  -o [ --output-file ] arg (=wallpaper.png)
+                                        output file
+  -h [ --help ]                         Help
+```
+
+You can substitute the cpu part for the other version if you like. 
+
+This is an example usage.
+
 `./wallpaper_cpu input.png logo.png -o result.png`
 
 

@@ -1,7 +1,7 @@
 Wallpaper Transformer
 =====================
 
-Wallpaper Transformer is a tool that transforms modifies wallpapers, with different effect efficiently.
+Wallpaper Transformer is a tool that transforms applies different effects to images/wallpapers efficiently.
 The tool was originally inspired by [arch-pepe-maker](https://gitlab.com/SillyPill/arch-pape-maker)
 The primary motivation for the "rewrite" was to, increase performance, allow execution on the gpu, and add new features. 
 

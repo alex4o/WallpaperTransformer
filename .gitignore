@@ -1,0 +1,8 @@
+halide
+bin/*
+code/*
+*.png
+*.jpg
+*.jpeg
+*.o
+*.html

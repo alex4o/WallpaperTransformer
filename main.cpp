@@ -114,15 +114,15 @@ public:
 
      void cpu()
      {
-          blur_x.reorder(c, y, x)
+          blur_x.reorder(c, x, y)
               .bound(c, 0, 3)
-              .unroll(c)
-              .split(x, xo, xi, 64)
-              .parallel(xo, 4)
-              .vectorize(y, 4);
+              .vectorize(c)
+			  .split(x, xo, xi, 8)
+			  .unroll(xi, 4)
+			  .parallel(y);
 
           blur_x.compute_root();
-          output.reorder(c, x, y).bound(c, 0, 3).unroll(c).split(x, xo, xi, 64).parallel(xo).vectorize(y, 4);
+          output.reorder(c, x, y).bound(c, 0, 3).vectorize(c).split(x, xo, xi, 64).parallel(xo).parallel(y).unroll(xi, 4);
 
           output.compile_to_c("code/archinizator_cpu.c", {input, logo}, "generate", target);
           output.compile_to_object("lib/archinizator_cpu.o", {input, logo}, "generate", target);
@@ -133,9 +133,9 @@ public:
      void gpu()
      {
 
-          blur_x.reorder(c, y, x).bound(c, 0, 3).unroll(c).compute_at(output, xi);
+          blur_x.reorder(c, y, x).bound(c, 0, 3).vectorize(c).compute_root();
 
-          output.reorder(c, x, y).bound(c, 0, 3).unroll(c).gpu_tile(x, y, xo, yo, xi, yi, 16, 21);
+          output.reorder(c, x, y).bound(c, 0, 3).vectorize(c).gpu_tile(x, y, xo, yo, xi, yi, 16, 21);
 
           // output.compile_to_c("code/archinizator_gpu.c", {input, logo}, "generate", target);
           output.compile_to_object("lib/archinizator_gpu_cl.o", {input, logo}, "generate", target);
@@ -144,6 +144,7 @@ public:
 
           auto targetNoCL = target.without_feature(Target::OpenCL);
           targetNoCL.set_feature(Target::CUDA);
+          targetNoCL.set_feature(Target::CUDACapability30);
 
           output.compile_to_object("lib/archinizator_gpu_cuda.o", {input, logo}, "generate", targetNoCL);
 
@@ -162,7 +163,8 @@ int main(int argc, char **argv)
      // target.set_feature(Target::CLHalf);
      target.set_feature(Target::OpenCL);
      target.set_feature(Target::AVX);
-     // target.set_feature(Target::AVX512);
+     target.set_feature(Target::SSE41);
+     target.set_feature(Target::AVX2);
      target.set_feature(Target::EnableLLVMLoopOpt);
      target.set_feature(Target::F16C);
 

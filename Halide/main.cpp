@@ -101,10 +101,12 @@ public:
           blur_y(x, y, c) = blur_y_exp;
 
           const float darken = -.4f;
-          output(x, y, c) =
-              Halide::Internal::Select::make(logo(x, y) < 128,
-                                             cast<uint8_t>(min(((blur_y(x, y, c) * (1.0f - darken)) + (.5f - darken / 2)), 1.0f) * 255.0f),
-                                             input(x, y, c));
+          // output(x, y, c) =
+          //     Halide::Internal::Select::make(logo(x, y) < 128,
+          //                                    cast<uint8_t>(min(((blur_y(x, y, c) * (1.0f - darken)) + (.5f - darken / 2)), 1.0f) * 255.0f),
+          //                                    input(x, y, c));
+
+          output(x, y, c) = cast<uint8_t>(blur_y_exp * 255.0f);
 
           // output(x, y, c) =
           //     (logo(x, y) / 255) * cast<uint8_t>(min(((blur_y(x, y, c) * (1.0f - darken)) + (.5f - darken / 2)), 1.0f) * 255.0f) +
@@ -137,7 +139,7 @@ public:
 
           output.reorder(c, x, y).bound(c, 0, 3).vectorize(c).gpu_tile(x, y, xo, yo, xi, yi, 16, 21);
 
-          // output.compile_to_c("code/archinizator_gpu.c", {input, logo}, "generate", target);
+          output.compile_to_c("code/archinizator_gpu_cl.c", {input, logo}, "generate", target);
           output.compile_to_object("lib/archinizator_gpu_cl.o", {input, logo}, "generate", target);
 
           output.compile_to_lowered_stmt("out/archinizator_gpu_cl.html", {input, logo}, HTML, target);
@@ -159,12 +161,14 @@ int main(int argc, char **argv)
 
      Target target = get_host_target();
      // target.set_feature(Target::OpenGLCompute);
-     // target.set_feature(Target::Debug);
-     // target.set_feature(Target::CLHalf);
+     target.set_feature(Target::Debug);
      target.set_feature(Target::OpenCL);
      target.set_feature(Target::AVX);
      target.set_feature(Target::SSE41);
      target.set_feature(Target::AVX2);
+     // target.set_feature(Target::CLHalf);
+     // target.set_feature(Target::AVX);
+     // target.set_feature(Target::AVX512);
      target.set_feature(Target::EnableLLVMLoopOpt);
      target.set_feature(Target::F16C);
 

@@ -74,6 +74,10 @@ int main(int argc, char **argv)
             
         Halide::Runtime::Buffer<uint8_t> output(input.width(), input.height(), 3);
 
+        // halide_get_gpu_device()
+
+        // input.copy_to_device();
+
         int error = generate(input, logo, output);
         if (error)
         {

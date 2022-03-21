@@ -4,8 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/../include",
-                "${workspaceFolder}/../tools"
+                "${workspaceFolder}/halide/include",
+                "${workspaceFolder}/halide/tools"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
